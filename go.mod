@@ -1,4 +1,4 @@
-module github.com/your-org/mcp-auto
+module github.com/lega4e/mcp-auto
 
 go 1.23
 
