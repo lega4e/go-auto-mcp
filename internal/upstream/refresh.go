@@ -15,6 +15,7 @@ import (
 	outboundauth "github.com/lega4e/mcp-auto/internal/auth/outbound"
 	"github.com/lega4e/mcp-auto/internal/config"
 	"github.com/lega4e/mcp-auto/internal/openapi"
+	"github.com/lega4e/mcp-auto/internal/telemetry"
 )
 
 // Snapshot is the compiled state for one upstream at a point in time.
@@ -91,6 +92,7 @@ func (r *Refresher) Start(ctx context.Context) {
 			case <-ticker.C:
 				if err := r.refresh(ctx); err != nil {
 					slog.Warn("spec refresh failed", "upstream", r.cfg.Name, "error", err)
+					telemetry.RecordSpecRefresh(ctx, r.cfg.Name, false)
 					count := r.failures.Add(1)
 					if r.cfg.OpenAPI.MaxRefreshFailures > 0 && int(count) >= r.cfg.OpenAPI.MaxRefreshFailures {
 						slog.Error("upstream marked degraded",
@@ -99,6 +101,7 @@ func (r *Refresher) Start(ctx context.Context) {
 						r.manager.RemoveUpstream(r.cfg.Name)
 					}
 				} else {
+					telemetry.RecordSpecRefresh(ctx, r.cfg.Name, true)
 					r.failures.Store(0)
 				}
 			}
