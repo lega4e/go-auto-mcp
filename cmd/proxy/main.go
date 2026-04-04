@@ -21,7 +21,15 @@ import (
 	upstreampkg "github.com/lega4e/mcp-auto/internal/upstream"
 )
 
+// Set by goreleaser ldflags.
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
 func main() {
+	slog.Info("starting mcp-auto", "version", version, "commit", commit, "date", date)
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
