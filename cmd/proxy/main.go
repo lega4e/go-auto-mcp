@@ -15,6 +15,7 @@ import (
 	sdkmcp "github.com/modelcontextprotocol/go-sdk/mcp"
 
 	"github.com/lega4e/mcp-auto/internal/auth/inbound"
+	"github.com/lega4e/mcp-auto/internal/auth/outbound"
 	"github.com/lega4e/mcp-auto/internal/config"
 	"github.com/lega4e/mcp-auto/internal/openapi"
 	"github.com/lega4e/mcp-auto/internal/server"
@@ -59,9 +60,16 @@ func main() {
 		}
 		slog.Info("validated tools", "upstream", upCfg.Name, "count", len(tools))
 
+		provider, provErr := outbound.New(ctx, &upCfg.OutboundAuth)
+		if provErr != nil {
+			slog.Error("build outbound auth provider", "upstream", upCfg.Name, "error", provErr)
+			os.Exit(1)
+		}
+
 		validatedUpstreams = append(validatedUpstreams, &upstreampkg.ValidatedUpstream{
-			Config: upCfg,
-			Tools:  tools,
+			Config:   upCfg,
+			Tools:    tools,
+			Provider: provider,
 		})
 	}
 
