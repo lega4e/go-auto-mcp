@@ -1,12 +1,21 @@
-package outbound
+// Package apikeyprovider registers the "api_key" outbound auth strategy.
+package apikeyprovider
 
 import (
 	"context"
 	"fmt"
 	"os"
 
+	"github.com/lega4e/mcp-auto/internal/auth/outbound"
 	"github.com/lega4e/mcp-auto/internal/config"
+	"github.com/lega4e/mcp-auto/internal/runtime"
 )
+
+func init() {
+	outbound.RegisterProvider("api_key", func(_ context.Context, cfg *config.OutboundAuthConfig, _ *runtime.Registry) (outbound.TokenProvider, error) {
+		return NewAPIKeyProvider(cfg.APIKey), nil
+	})
+}
 
 // APIKeyProvider injects an API key into a configured request header.
 type APIKeyProvider struct {
