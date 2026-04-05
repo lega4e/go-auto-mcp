@@ -18,6 +18,7 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/lega4e/mcp-auto/internal/config"
+	"github.com/lega4e/mcp-auto/internal/runtime"
 	"github.com/lega4e/mcp-auto/internal/telemetry"
 	upstreampkg "github.com/lega4e/mcp-auto/internal/upstream"
 )
@@ -46,11 +47,13 @@ type Manager struct {
 }
 
 // NewManager creates a Manager with no active servers.
-func NewManager() *Manager {
+// pools is used to bound the number of concurrent script runtime instances
+// across all upstream builders and auth factories.
+func NewManager(pools *runtime.Registry) *Manager {
 	return &Manager{
 		servers:        make(map[string]*sdkmcp.Server),
 		upstreamByName: make(map[string]*upstreamState),
-		builders:       upstreampkg.NewBuilderRegistry(),
+		builders:       upstreampkg.NewBuilderRegistry(pools),
 	}
 }
 
