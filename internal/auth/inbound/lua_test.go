@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/lega4e/mcp-auto/internal/config"
+	"github.com/lega4e/mcp-auto/internal/runtime"
 )
 
 func writeLuaScript(t *testing.T, content string) string {
@@ -27,7 +28,8 @@ func writeLuaScript(t *testing.T, content string) string {
 func newValidator(t *testing.T, script string, timeout time.Duration) *LuaValidator {
 	t.Helper()
 	path := writeLuaScript(t, script)
-	v, err := NewLuaValidator(config.LuaAuthConfig{ScriptPath: path, Timeout: timeout})
+	pool := runtime.NewPool(runtime.DefaultMaxAuthVMs)
+	v, err := NewLuaValidator(config.LuaAuthConfig{ScriptPath: path, Timeout: timeout}, pool)
 	if err != nil {
 		t.Fatalf("NewLuaValidator: %v", err)
 	}
@@ -84,7 +86,8 @@ func TestLuaValidatorCompileError(t *testing.T) {
 	if err := os.WriteFile(path, []byte(`this is not valid lua @@##`), 0o644); err != nil {
 		t.Fatalf("write: %v", err)
 	}
-	_, err := NewLuaValidator(config.LuaAuthConfig{ScriptPath: path, Timeout: 500 * time.Millisecond})
+	pool := runtime.NewPool(runtime.DefaultMaxAuthVMs)
+	_, err := NewLuaValidator(config.LuaAuthConfig{ScriptPath: path, Timeout: 500 * time.Millisecond}, pool)
 	if err == nil {
 		t.Fatal("expected compile error for invalid Lua")
 	}
