@@ -3,7 +3,7 @@ package runtime
 import (
 	"fmt"
 
-	"github.com/lega4e/mcp-auto/internal/config"
+	"github.com/lega4e/mcp-auto/pkg/config"
 )
 
 const (
