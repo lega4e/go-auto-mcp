@@ -17,7 +17,7 @@ import (
 	"github.com/getkin/kin-openapi/routers/gorillamux"
 	"gopkg.in/yaml.v3"
 
-	"github.com/lega4e/mcp-auto/internal/config"
+	"github.com/lega4e/mcp-auto/pkg/config"
 )
 
 // LoadPipeline executes the full OpenAPI loading pipeline for a single upstream:
