@@ -20,6 +20,7 @@ import (
 	"github.com/lega4e/mcp-auto/internal/server"
 	"github.com/lega4e/mcp-auto/internal/telemetry"
 	upstreampkg "github.com/lega4e/mcp-auto/internal/upstream"
+	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/all"
 )
 
 // Set by goreleaser ldflags.
