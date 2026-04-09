@@ -6,7 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/lega4e/mcp-auto/internal/config"
+	"github.com/lega4e/mcp-auto/pkg/config"
 )
 
 // WellKnownHandler returns an http.HandlerFunc for the OAuth 2.0 Protected Resource Metadata
