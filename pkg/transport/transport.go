@@ -10,7 +10,7 @@ import (
 
 	"golang.org/x/net/proxy"
 
-	"github.com/lega4e/mcp-auto/internal/config"
+	"github.com/lega4e/mcp-auto/pkg/config"
 )
 
 // Builder constructs configured http.Transport instances per upstream.

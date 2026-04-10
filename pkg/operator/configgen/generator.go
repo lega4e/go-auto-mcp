@@ -7,7 +7,7 @@ import (
 
 	"sigs.k8s.io/yaml"
 
-	"github.com/lega4e/mcp-auto/internal/config"
+	"github.com/lega4e/mcp-auto/pkg/config"
 	"github.com/lega4e/mcp-auto/pkg/crd/v1alpha1"
 )
 

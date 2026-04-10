@@ -12,9 +12,9 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/lega4e/mcp-auto/internal/config"
-	"github.com/lega4e/mcp-auto/internal/telemetry"
-	internaltls "github.com/lega4e/mcp-auto/internal/transport"
+	"github.com/lega4e/mcp-auto/pkg/config"
+	pkgtelemetry "github.com/lega4e/mcp-auto/pkg/telemetry"
+	pkgtransport "github.com/lega4e/mcp-auto/pkg/transport"
 )
 
 // ReadinessChecker can report whether the proxy is ready to serve.
@@ -71,7 +71,7 @@ func New(cfg *config.ProxyConfig, mcpHandlers map[string]http.Handler, wellKnown
 
 	// Mount MCP handlers wrapped with OTel server instrumentation.
 	for path, handler := range mcpHandlers {
-		r.Mount(path, telemetry.ServerMiddleware(handler, path))
+		r.Mount(path, pkgtelemetry.ServerMiddleware(handler, path))
 	}
 
 	httpSrv := &http.Server{
@@ -97,7 +97,7 @@ func (s *Server) Start(ctx context.Context) error {
 		slog.Info("server listening", "addr", s.httpServer.Addr)
 		var err error
 		if s.cfg.Server.TLS.CertPath != "" {
-			tlsCfg, buildErr := internaltls.BuildServerTLSConfig(s.cfg.Server.TLS)
+			tlsCfg, buildErr := pkgtransport.BuildServerTLSConfig(s.cfg.Server.TLS)
 			if buildErr != nil {
 				errCh <- fmt.Errorf("server TLS config: %w", buildErr)
 				return
