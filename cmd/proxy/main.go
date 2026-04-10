@@ -18,10 +18,12 @@ import (
 	"github.com/lega4e/mcp-auto/internal/runtime"
 	"github.com/lega4e/mcp-auto/internal/server"
 	"github.com/lega4e/mcp-auto/internal/telemetry"
-	upstreampkg "github.com/lega4e/mcp-auto/internal/upstream"
 	inbound "github.com/lega4e/mcp-auto/pkg/auth/inbound"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/all"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/all"
+	pkgupstream "github.com/lega4e/mcp-auto/pkg/upstream"
+	_ "github.com/lega4e/mcp-auto/pkg/upstream/all"
+	pkghttp "github.com/lega4e/mcp-auto/pkg/upstream/http"
 )
 
 // Set by goreleaser ldflags.
@@ -165,7 +167,7 @@ func main() {
 	}
 
 	// Create background refreshers for URL-based upstreams.
-	var refreshers []*upstreampkg.Refresher
+	var refreshers []*pkghttp.Refresher
 	for i := range cfg.Upstreams {
 		upCfg := &cfg.Upstreams[i]
 		if !upCfg.Enabled || upCfg.OpenAPI.RefreshInterval <= 0 {
@@ -174,7 +176,7 @@ func main() {
 		if !isURLSource(upCfg.OpenAPI.Source) {
 			continue
 		}
-		refresher, refErr := upstreampkg.NewRefresher(ctx, upCfg, &cfg.Naming, manager, runtimePools)
+		refresher, refErr := pkghttp.NewRefresher(ctx, upCfg, &cfg.Naming, manager, runtimePools)
 		if refErr != nil {
 			slog.Error("creating refresher", "upstream", upCfg.Name, "error", refErr)
 			os.Exit(1)
@@ -187,7 +189,11 @@ func main() {
 
 	var readiness server.ReadinessChecker
 	if len(refreshers) > 0 {
-		readiness = upstreampkg.NewRefresherSet(refreshers)
+		hcs := make([]pkgupstream.HealthChecker, len(refreshers))
+		for i, r := range refreshers {
+			hcs[i] = r
+		}
+		readiness = pkgupstream.NewRefresherSet(hcs)
 	}
 
 	srv := server.New(cfg, mcpHandlers, wellKnown, telemetry.ReloadMetricsHandler(), promhttp.Handler(), readiness)

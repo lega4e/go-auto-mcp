@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lega4e/mcp-auto/internal/config"
-	"github.com/lega4e/mcp-auto/internal/runtime"
-	"github.com/lega4e/mcp-auto/internal/script"
+	"github.com/lega4e/mcp-auto/pkg/config"
+	"github.com/lega4e/mcp-auto/pkg/runtime"
+	"github.com/lega4e/mcp-auto/pkg/upstream/script"
 )
 
 // TestCompileScript_ValidScript verifies that a valid script compiles without error.
