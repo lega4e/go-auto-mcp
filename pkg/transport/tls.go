@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/lega4e/mcp-auto/internal/config"
+	"github.com/lega4e/mcp-auto/pkg/config"
 )
 
 // BuildTLSConfig constructs a *tls.Config for outbound (upstream) connections.
