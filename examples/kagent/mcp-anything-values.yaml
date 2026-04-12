@@ -4,7 +4,7 @@
 ## Usage:
 ##   helm install mcp-auto ./deploy/helm/mcp-auto \
 ##     -n mcp-system --create-namespace \
-##     -f deploy/examples/kagent/mcp-auto-values.yaml
+##     -f examples/kagent/mcp-auto-values.yaml
 ##
 ## After installing the operator, apply the MCPProxy and MCPUpstream resources
 ## and then the kagent resources (modelconfig.yaml, remotemcpserver.yaml, agent.yaml).
