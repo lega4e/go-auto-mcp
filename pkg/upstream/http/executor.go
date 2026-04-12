@@ -19,6 +19,7 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 
+	pkgoutbound "github.com/lega4e/mcp-auto/pkg/auth/outbound"
 	"github.com/lega4e/mcp-auto/pkg/content"
 	"github.com/lega4e/mcp-auto/pkg/openapi"
 	pkgtelemetry "github.com/lega4e/mcp-auto/pkg/telemetry"
@@ -182,7 +183,17 @@ func (e *Executor) httpDispatchWithStatus(
 
 	resp, err := entry.Upstream.Client.Do(httpReq)
 	if err != nil {
-		return nil, 0, fmt.Errorf("executing HTTP request: %w", err)
+		// Check if the outbound auth strategy requires user authorization.
+		var authErr *pkgoutbound.AuthRequiredError
+		if errors.As(err, &authErr) {
+			return &sdkmcp.CallToolResult{
+				IsError: true,
+				Content: []sdkmcp.Content{
+					&sdkmcp.TextContent{Text: "Authorization required. Please visit the following URL to grant access:\n" + authErr.AuthURL},
+				},
+			}, nil
+		}
+		return nil, fmt.Errorf("executing HTTP request: %w", err)
 	}
 	defer func() {
 		if closeErr := resp.Body.Close(); closeErr != nil {
