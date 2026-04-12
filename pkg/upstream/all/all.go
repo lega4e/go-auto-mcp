@@ -11,5 +11,6 @@ package all
 import (
 	_ "github.com/lega4e/mcp-auto/pkg/upstream/command"
 	_ "github.com/lega4e/mcp-auto/pkg/upstream/http"
+	_ "github.com/lega4e/mcp-auto/pkg/upstream/http/withui"
 	_ "github.com/lega4e/mcp-auto/pkg/upstream/script"
 )

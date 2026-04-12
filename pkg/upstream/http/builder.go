@@ -17,7 +17,6 @@ import (
 	pkgoutbound "github.com/lega4e/mcp-auto/pkg/auth/outbound"
 	"github.com/lega4e/mcp-auto/pkg/config"
 	"github.com/lega4e/mcp-auto/pkg/openapi"
-	"github.com/lega4e/mcp-auto/pkg/ui"
 	pkgupstream "github.com/lega4e/mcp-auto/pkg/upstream"
 )
 
@@ -101,18 +100,14 @@ func (b *Builder) Build(ctx context.Context, cfg *config.UpstreamConfig, naming 
 		entry.Executor = &Executor{entry: entry}
 
 		// Load and attach a UI handler when a UI source is configured for this tool.
+		// buildUIHandler returns nil, nil when no UI factory is registered (pkg/upstream/http/withui not imported).
 		if vt.UIConfig != nil {
-			loader, uiErr := ui.New(vt.UIConfig, nil, uiFetchClient, cfg.JSScriptPool)
+			resourceURI := "ui://" + vt.PrefixedName + "/app"
+			handler, uiErr := buildUIHandler(vt.UIConfig, uiFetchClient, cfg.JSScriptPool, vt.PrefixedName, vt.MCPTool.Description, vt.MCPTool.InputSchema, resourceURI)
 			if uiErr != nil {
 				return nil, fmt.Errorf("loading UI for tool %q: %w", vt.PrefixedName, uiErr)
 			}
-			resourceURI := "ui://" + vt.PrefixedName + "/app"
-			entry.UIHandler = loader.ResourceHandler(
-				vt.PrefixedName,
-				vt.MCPTool.Description,
-				vt.MCPTool.InputSchema,
-				resourceURI,
-			)
+			entry.UIHandler = handler
 		}
 
 		entries = append(entries, entry)
