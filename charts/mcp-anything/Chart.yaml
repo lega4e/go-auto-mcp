@@ -1,0 +1,16 @@
+apiVersion: v2
+name: mcp-auto
+description: Kubernetes operator for mcp-auto — converts HTTP REST APIs into MCP tools via CRDs.
+type: application
+version: 0.1.0
+appVersion: "latest"
+keywords:
+  - mcp
+  - operator
+  - kubernetes
+  - api-gateway
+home: https://github.com/lega4e/mcp-auto
+sources:
+  - https://github.com/lega4e/mcp-auto
+maintainers:
+  - name: lega4e
