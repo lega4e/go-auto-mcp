@@ -22,6 +22,9 @@ import (
 
 	// Register all rate limit stores (in-memory and Redis).
 	_ "github.com/lega4e/mcp-auto/pkg/ratelimit/all"
+
+	// Register all session store providers (memory, postgres, redis).
+	_ "github.com/lega4e/mcp-auto/pkg/session/all"
 )
 
 // Set by goreleaser ldflags.
