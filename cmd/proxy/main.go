@@ -22,6 +22,9 @@ import (
 
 	// Register all rate limit stores (in-memory and Redis).
 	_ "github.com/lega4e/mcp-auto/pkg/ratelimit/all"
+
+	// Register all embedding providers (including hugot for in-process ONNX).
+	_ "github.com/lega4e/mcp-auto/pkg/embedding/all"
 )
 
 // Set by goreleaser ldflags.
