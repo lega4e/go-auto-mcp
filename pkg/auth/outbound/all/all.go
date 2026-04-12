@@ -12,4 +12,5 @@ import (
 	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/lua"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/none"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/oauth2"
+	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/oauth2usersession"
 )
