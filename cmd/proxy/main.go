@@ -11,6 +11,9 @@ import (
 
 	"github.com/lega4e/mcp-auto/pkg/mcpanything"
 
+	// Register all cache store backends.
+	_ "github.com/lega4e/mcp-auto/pkg/cache/all"
+
 	// Register all upstream builders.
 	_ "github.com/lega4e/mcp-auto/pkg/upstream/all"
 
