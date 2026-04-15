@@ -31,12 +31,27 @@ import (
 	pkgconfig "github.com/lega4e/mcp-auto/pkg/config"
 	"github.com/lega4e/mcp-auto/pkg/mcpanything"
 
-	// Pull in all built-in auth and upstream strategies so that the Caddy
-	// binary supports every feature without requiring explicit blank imports
-	// from the operator.
-	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/all"
-	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/all"
-	_ "github.com/lega4e/mcp-auto/pkg/upstream/all"
+	// Pull in all built-in inbound auth strategies.
+	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/apikey"
+	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/introspection"
+	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/jwt"
+
+	// Pull in all built-in outbound auth strategies.
+	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/apikey"
+	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/bearer"
+	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/none"
+	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/oauth2"
+	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/oauth2usersession"
+
+	// Pull in scripting runtimes (JS and Lua for both inbound and outbound).
+	_ "github.com/lega4e/mcp-auto/pkg/runtime/js"
+	_ "github.com/lega4e/mcp-auto/pkg/runtime/lua"
+
+	// Pull in all built-in upstream builders.
+	_ "github.com/lega4e/mcp-auto/pkg/upstream/command"
+	_ "github.com/lega4e/mcp-auto/pkg/upstream/http"
+	_ "github.com/lega4e/mcp-auto/pkg/upstream/http/withui"
+	_ "github.com/lega4e/mcp-auto/pkg/upstream/script"
 )
 
 func init() {

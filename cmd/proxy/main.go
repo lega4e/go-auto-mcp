@@ -11,26 +11,8 @@ import (
 
 	"github.com/lega4e/mcp-auto/pkg/mcpanything"
 
-	// Register all cache store backends.
-	_ "github.com/lega4e/mcp-auto/pkg/cache/all"
-
-	// Register all upstream builders.
-	_ "github.com/lega4e/mcp-auto/pkg/upstream/all"
-
-	// Register all outbound auth strategies.
-	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/all"
-
-	// Register all inbound auth strategies.
-	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/all"
-
-	// Register all rate limit stores (in-memory and Redis).
-	_ "github.com/lega4e/mcp-auto/pkg/ratelimit/all"
-
-	// Register all embedding providers (including hugot for in-process ONNX).
-	_ "github.com/lega4e/mcp-auto/pkg/embedding/all"
-
-	// Register all session store providers (memory, postgres, redis).
-	_ "github.com/lega4e/mcp-auto/pkg/session/all"
+	// Register all built-in components (cache, upstream, auth, ratelimit, embedding, session).
+	_ "github.com/lega4e/mcp-auto/cmd/proxy/deps"
 )
 
 // Set by goreleaser ldflags.
