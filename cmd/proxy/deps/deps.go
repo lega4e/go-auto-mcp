@@ -31,7 +31,8 @@ import (
 	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/oauth2usersession"
 
 	// Scripting runtimes (register runtime pools and inbound/outbound JS/Lua strategies).
-	_ "github.com/lega4e/mcp-auto/pkg/runtime/all"
+	_ "github.com/lega4e/mcp-auto/pkg/runtime/js"
+	_ "github.com/lega4e/mcp-auto/pkg/runtime/lua"
 
 	// Rate-limit stores.
 	_ "github.com/lega4e/mcp-auto/pkg/ratelimit/memory"
