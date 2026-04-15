@@ -8,9 +8,9 @@ package all
 import (
 	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/apikey"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/bearer"
-	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/js"
-	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/lua"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/none"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/oauth2"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/outbound/oauth2usersession"
+	_ "github.com/lega4e/mcp-auto/pkg/scripting/js"
+	_ "github.com/lega4e/mcp-auto/pkg/scripting/lua"
 )
