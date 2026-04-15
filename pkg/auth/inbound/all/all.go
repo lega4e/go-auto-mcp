@@ -7,6 +7,7 @@ package all
 
 import (
 	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/apikey"
+	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/ext_authz"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/introspection"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/js"
 	_ "github.com/lega4e/mcp-auto/pkg/auth/inbound/jwt"
