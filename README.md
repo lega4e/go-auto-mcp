@@ -3,6 +3,7 @@
 [![Website](https://img.shields.io/badge/website-mcp--anything.ai-blue)](https://mcp-auto.ai)
 [![License](https://img.shields.io/github/license/lega4e/mcp-auto)](LICENSE)
 [![CI](https://github.com/lega4e/mcp-auto/actions/workflows/ci.yml/badge.svg)](https://github.com/lega4e/mcp-auto/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/lega4e/mcp-auto/branch/main/graph/badge.svg)](https://codecov.io/gh/lega4e/mcp-auto)
 
 A stateless Go proxy that turns **anything** — REST APIs, shell commands, JavaScript scripts — into [MCP](https://modelcontextprotocol.io) tools. No code, no plugins — just config.
 
