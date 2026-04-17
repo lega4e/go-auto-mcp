@@ -17,6 +17,7 @@ import (
 	"github.com/lega4e/mcp-auto/pkg/config"
 	pkgmiddleware "github.com/lega4e/mcp-auto/pkg/middleware"
 	"github.com/lega4e/mcp-auto/pkg/openapi"
+	"github.com/lega4e/mcp-auto/pkg/transform"
 	pkgupstream "github.com/lega4e/mcp-auto/pkg/upstream"
 )
 
@@ -104,12 +105,12 @@ func (b *Builder) Build(ctx context.Context, cfg *config.UpstreamConfig, naming 
 		executor := &Executor{entry: entry}
 		entry.Executor = executor
 
-		// Compose the per-tool middleware chain:
-		//   RequestMiddleware (transform) → outbound auth → Executor (terminal handler)
+		// Compose the per-tool handler chain:
+		//   TransformHandler → outbound auth → Executor (terminal handler)
 		var h nethttp.Handler = executor
 		h = outboundMW(h)
 		if vt.Transforms != nil {
-			h = vt.Transforms.RequestMiddleware()(h)
+			h = &transform.Handler{Transforms: vt.Transforms, Next: h}
 		}
 		entry.Handler = h
 
