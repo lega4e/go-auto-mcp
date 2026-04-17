@@ -11,8 +11,9 @@ RUN CGO_ENABLED=0 go build -o /mcp-auto-kong ./cmd/kong
 FROM kong:3.9-ubuntu
 
 USER root
-RUN mkdir -p /etc/mcp-auto /etc/kong
+RUN mkdir -p /etc/mcp-auto /etc/kong /usr/local/share/lua/5.1/kong/plugins/mcp-auto
 COPY --from=builder /mcp-auto-kong /usr/local/bin/mcp-auto-kong
+COPY pkg/kong/schema.lua /usr/local/share/lua/5.1/kong/plugins/mcp-auto/schema.lua
 
 ENV KONG_PLUGINS=bundled,mcp-auto
 ENV KONG_PLUGINSERVER_NAMES=mcp-auto
